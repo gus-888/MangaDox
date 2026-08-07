@@ -1,0 +1,95 @@
+================================================================================
+                    MangaDox API - Documentação Oficial (.TXT)
+================================================================================
+
+O MangaDox API é uma solução completa de scraping e agregação de dados de 
+mangás, manhwas e manhuas em tempo real a partir de múltiplos provedores.
+
+--------------------------------------------------------------------------------
+1. PROVEDORES SUPORTADOS
+--------------------------------------------------------------------------------
+- all / todos    : Pesquisa unificada em todos os provedores em simultâneo
+- mangalivre     : MangaLivre.blog (PT-BR)
+- mangalivreto   : MangaLivre.to (PT-BR)
+- mugiwaras      : Mugiwaras Oficial (PT-BR)
+- mangafire      : MangaFire.to (EN)
+
+--------------------------------------------------------------------------------
+2. ENDPOINTS DA API (URL Base: http://localhost:3001)
+--------------------------------------------------------------------------------
+
+A) PESQUISAR MANGÁS
+   GET /api/search?q=TERMO_DE_BUSCA&provider=PROVEDOR
+   Exemplo: http://localhost:3001/api/search?q=one%20piece&provider=all
+
+   Retorno JSON:
+   {
+     "provider": "all",
+     "count": 4,
+     "data": [
+       {
+         "title": "One Piece",
+         "slug": "one-piece",
+         "url": "https://mangalivre.blog/manga/one-piece/",
+         "cover": "https://mangalivre.blog/wp-content/uploads/.../cover.jpg",
+         "status": "Em Lançamento",
+         "latestChapter": "1190",
+         "rating": "9.2",
+         "provider": "mangalivre"
+       }
+     ]
+   }
+
+B) LISTAR MANGÁS / CATÁLOGO
+   GET /api/mangas?page=1&provider=PROVEDOR
+   Exemplo: http://localhost:3001/api/mangas?page=1&provider=mangalivre
+
+C) DETALHES DO MANGÁ E CAPÍTULOS
+   GET /api/manga/:slug?provider=PROVEDOR
+   Exemplo: http://localhost:3001/api/manga/one-piece?provider=mangalivre
+
+   Retorno JSON:
+   {
+     "title": "One Piece",
+     "slug": "one-piece",
+     "summary": "Gol D. Roger era conhecido como o Rei dos Piratas...",
+     "genres": ["Ação", "Aventura"],
+     "chaptersCount": 1176,
+     "chapters": [
+       {
+         "name": "Capítulo 1190",
+         "number": "1190",
+         "chapterSlug": "one-piece-capitulo-1190",
+         "url": "https://mangalivre.blog/capitulo/one-piece-capitulo-1190/",
+         "pagesApiUrl": "/api/chapter/one-piece-capitulo-1190?provider=mangalivre"
+       }
+     ]
+   }
+
+D) PÁGINAS PURAS DO CAPÍTULO (IMAGENS PNG / JPG / WEBP)
+   GET /api/chapter/:chapterSlug?provider=PROVEDOR
+   Exemplo: http://localhost:3001/api/chapter/one-piece-capitulo-1190?provider=mangalivre
+
+   Retorno JSON:
+   {
+     "chapterSlug": "one-piece-capitulo-1190",
+     "title": "One Piece - Capítulo 1190",
+     "number": "1190",
+     "pagesCount": 15,
+     "pages": [
+       "https://mangalivre.blog/wp-content/uploads/.../001.webp",
+       "https://mangalivre.blog/wp-content/uploads/.../002.webp"
+     ]
+   }
+
+E) PROXY DE IMAGENS (BURLAR REFERER / HOTLINKING)
+   GET /api/proxy?url=URL_CODIFICADA_DA_IMAGEM
+   Exemplo: http://localhost:3001/api/proxy?url=https%3A%2F%2Fm3z.mfcdn1.xyz%2F...jpg
+
+--------------------------------------------------------------------------------
+3. COMO EXECUTAR O SERVIDOR
+--------------------------------------------------------------------------------
+1. Instalar dependências: npm install
+2. Iniciar servidor:      npm start
+3. Abrir no navegador:   http://localhost:3001
+================================================================================

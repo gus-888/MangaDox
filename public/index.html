@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>MangaDox - Leitor de Mangás Online</title>
+  <meta name="description" content="Explore e leia seus mangás e manhwas favoritos online do MangaLivre e MangaFire com um leitor limpo e moderno.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER / NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <div class="brand" id="brand-home" title="Ir para início">
+        <span class="logo-icon">📖</span>
+        <span class="logo-text">Manga<span class="gradient-text">Dox</span></span>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Pesquisar mangás (ex: One Piece, Solo Leveling)..." autocomplete="off" />
+        <button id="search-btn" class="btn-primary" aria-label="Pesquisar">
+          <span>🔍</span>
+        </button>
+      </div>
+
+      <div class="provider-selector">
+        <label for="provider-select" class="provider-label">Provedor:</label>
+        <select id="provider-select" class="select-input">
+          <option value="all">⚡ Todos os Provedores (All)</option>
+          <option value="mangalivre">MangaLivre.blog (PT-BR)</option>
+          <option value="mangalivreto">MangaLivre.to (PT-BR)</option>
+          <option value="mugiwaras">Mugiwaras Oficial (PT-BR)</option>
+          <option value="mangafire">MangaFire (EN)</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="container main-content">
+    
+    <!-- BANNER DE BOAS-VINDAS -->
+    <section class="welcome-banner">
+      <div class="banner-text">
+        <h2>Seu leitor de mangás definitivo <span class="badge-provider" id="active-provider-badge">MangaLivre</span></h2>
+        <p>Pesquise e leia episódios sem distrações, em alta definição e com leitor imersivo.</p>
+      </div>
+    </section>
+
+    <!-- HEADER DA SEÇÃO -->
+    <div class="section-header">
+      <h3 id="section-title">✨ Mangás em Destaque</h3>
+      <span id="results-count" class="results-count"></span>
+    </div>
+
+    <!-- SPINNER DE CARREGAMENTO -->
+    <div id="loader" class="loader-container hidden">
+      <div class="spinner"></div>
+      <p>Buscando mangás no provedor...</p>
+    </div>
+
+    <!-- GRID DE MANGÁS -->
+    <div id="manga-grid" class="manga-grid"></div>
+
+  </main>
+
+  <!-- MODAL DE DETALHES DO MANGÁ -->
+  <div id="details-modal" class="modal hidden">
+    <div class="modal-overlay" id="close-modal-overlay"></div>
+    <div class="modal-card">
+      <button class="close-modal-btn" id="close-details-btn">&times;</button>
+      
+      <div class="modal-body">
+        <div class="manga-cover-wrapper">
+          <img id="modal-cover" src="" alt="Capa do Mangá" />
+        </div>
+        
+        <div class="manga-info">
+          <h2 id="modal-title">Título do Mangá</h2>
+          
+          <div class="manga-tags" id="modal-genres"></div>
+          
+          <p id="modal-summary" class="manga-summary">Sinopse carregando...</p>
+          
+          <div class="chapters-header">
+            <h4>📜 Capítulos Disponíveis (<span id="modal-chapter-count">0</span>)</h4>
+            <input type="text" id="chapter-filter-input" placeholder="Filtrar capítulo (ex: 1190)..." />
+          </div>
+          
+          <div id="modal-chapters-list" class="chapters-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEITOR IMERSIVO DE CAPÍTULO (FULLSCREEN) -->
+  <div id="reader-view" class="reader-view hidden">
+    <!-- BARRA SUPERIOR DO LEITOR -->
+    <header class="reader-header">
+      <button id="close-reader-btn" class="btn-secondary">← Voltar</button>
+      <div class="reader-title-box">
+        <h3 id="reader-title">Título do Capítulo</h3>
+        <span id="reader-page-counter" class="page-counter">Página 1 / 1</span>
+      </div>
+      <div class="reader-controls">
+        <button id="prev-chapter-btn" class="btn-secondary" disabled>Cap. Anterior</button>
+        <button id="next-chapter-btn" class="btn-secondary" disabled>Próximo Cap. →</button>
+      </div>
+    </header>
+
+    <!-- CARREGADOR DO LEITOR -->
+    <div id="reader-loader" class="loader-container">
+      <div class="spinner"></div>
+      <p>Carregando páginas em alta definição...</p>
+    </div>
+
+    <!-- CONTAINER DAS PÁGINAS PURAS DO MANGÁ -->
+    <div id="reader-pages-container" class="reader-pages-container"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>MangaDox API &copy; 2026 - Leitor de Mangás Scraping REST API</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
