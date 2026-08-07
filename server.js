@@ -9,7 +9,7 @@ import { MugiwarasProvider } from './providers/mugiwaras.js';
 import { AllProvider } from './providers/all.js';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
