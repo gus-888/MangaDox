@@ -1,18 +1,19 @@
 {
   "name": "mangadox-api",
   "version": "1.0.0",
-  "description": "API REST de scraping para o MangaLivre.blog",
+  "description": "API REST e Leitor de Mangás Scraping",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "build": "echo \"Build completed successfully\""
   },
   "dependencies": {
     "axios": "^1.7.9",
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "puppeteer": "^25.5.0"
+    "puppeteer": "^24.1.1"
   }
 }
