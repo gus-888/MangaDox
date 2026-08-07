@@ -1,4 +1,4 @@
-# 📖 MangaDox — API REST & Web App de Agregação de Mangás
+# 📖 MangaDox — API REST & Web App de Mangás
 
 > **MangaDox** é um leitor de mangás moderno e uma API REST de alta performance desenvolvida em Node.js. O projeto faz scraping em tempo real e agrega capítulos, capas e páginas puras de múltiplos provedores de mangás, manhwas e manhuas (*MangaLivre.blog*, *MangaLivre.to*, *Mugiwaras Oficial* e *MangaFire*).
 
@@ -6,11 +6,9 @@
 
 ## ✨ Destaques do Projeto
 
-* 🚀 **Multi-Provedor Integrado**: Alterne entre múltiplos provedores em português e inglês ou use o modo **`all` (Unificado)** para pesquisar em todas as fontes ao mesmo tempo.
-* 🖼️ **Leitor Imersivo de Páginas Puras**: Extrai os links diretos das imagens (`.png`, `.jpg`, `.webp`) sem anúncios, popups ou rastreadores dos sites de origem.
+* 🚀 **Multi-Provedor**: Alterne entre múltiplos provedores em português e inglês ou use o modo **`all` (Unificado)** para pesquisar em todas as fontes ao mesmo tempo.
+* 🖼️ **Leitor de Páginas**: Extrai os links diretos das imagens (`.png`, `.jpg`, `.webp`) sem anúncios, popups ou rastreadores dos sites de origem.
 * 🛡️ **Bypass de Hotlinking / Referer**: Endpoint de proxy inteligente (`/api/proxy`) que contorna erros de `403 Forbidden` e bloqueios de imagem por CDN.
-* 📱 **Interface Web Moderna (Glassmorphic Dark UI)**: Frontend responsivo feito em HTML5/CSS3/JS Vanilla com busca instantânea, filtro de capítulos e leitor em tela cheia.
-* ⚙️ **Pronto para Serverless & Vercel**: Arquitetura modular compatível com deploy em instâncias Node.js locais ou funções Serverless na Vercel (`vercel.json`).
 
 ---
 
@@ -18,8 +16,7 @@
 
 * **Backend / API**: Node.js, Express, Axios, Cheerio, Puppeteer Headless.
 * **Frontend**: HTML5, Vanilla CSS3 (Glassmorphism, CSS Grid & Flexbox), ES6 JavaScript.
-* **Deploy & Config**: Vercel Serverless (`vercel.json`).
-
+  
 ---
 
 ## 🌐 Endpoints Principais
