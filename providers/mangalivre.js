@@ -1,10 +1,17 @@
 import axios from 'axios';
+import https from 'https';
 import * as cheerio from 'cheerio';
 
 const BASE_URL = 'https://mangalivre.blog';
 
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+  keepAlive: true
+});
+
 const client = axios.create({
   baseURL: BASE_URL,
+  httpsAgent,
   headers: {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',

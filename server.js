@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
+import http from 'http';
+import https from 'https';
 
 import { MangaLivreProvider } from './providers/mangalivre.js';
 import { MangaFireProvider } from './providers/mangafire.js';
@@ -10,6 +12,12 @@ import { AllProvider } from './providers/all.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+const httpAgent = new http.Agent({ keepAlive: true });
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+  keepAlive: true
+});
 
 app.use(cors());
 app.use(express.json());
@@ -23,6 +31,10 @@ app.get('/api/proxy', async (req, res) => {
     const imageUrl = req.query.url;
     if (!imageUrl) return res.status(400).send('URL é obrigatória');
 
+    if (imageUrl.includes('via.placeholder.com')) {
+      return res.redirect(imageUrl);
+    }
+
     const isMangaFire = imageUrl.includes('mfcdn') || imageUrl.includes('mangafire');
     const isMugiwara = imageUrl.includes('mugiverso') || imageUrl.includes('mugiwaras');
     
@@ -30,23 +42,27 @@ app.get('/api/proxy', async (req, res) => {
     if (isMangaFire) referer = 'https://mangafire.to/';
     if (isMugiwara) referer = 'https://mugiwarasoficial.com/';
 
-    const response = await axios.get(imageUrl, {
-      responseType: 'arraybuffer',
+    const response = await fetch(imageUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Referer': referer,
         'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
       },
-      validateStatus: () => true,
-      timeout: 15000
+      signal: AbortSignal.timeout(15000)
     });
 
-    const contentType = response.headers['content-type'] || 'image/jpeg';
+    if (!response.ok && response.status !== 403 && response.status !== 404) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const contentType = response.headers.get('content-type') || 'image/jpeg';
+    const arrayBuffer = await response.arrayBuffer();
+    
     res.setHeader('Content-Type', contentType);
     res.setHeader('Cache-Control', 'public, max-age=86400');
-    res.status(response.status).send(Buffer.from(response.data));
+    res.status(response.status).send(Buffer.from(arrayBuffer));
   } catch (error) {
-    console.error('Proxy Error:', error.message);
+    console.error(`Proxy Error for URL ${req.query.url}:`, error.message);
     res.status(500).send('Erro no proxy de imagem: ' + error.message);
   }
 });

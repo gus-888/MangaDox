@@ -1,0 +1,12 @@
+# Comandos de Instalação do MangaDox API
+
+Para garantir que a API e todos os provedores (como o MangaFire) funcionem perfeitamente em qualquer máquina, execute os seguintes comandos na raiz do projeto:
+
+1. Instalar as dependências do Node.js:
+npm install
+
+2. Instalar o navegador Chrome para o Puppeteer (necessário para raspar sites protegidos como o MangaFire):
+npx puppeteer browsers install chrome
+
+3. Iniciar o servidor:
+npm start

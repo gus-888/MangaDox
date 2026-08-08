@@ -1,10 +1,17 @@
 import axios from 'axios';
+import https from 'https';
 import * as cheerio from 'cheerio';
 
 const BASE_URL = 'https://mugiwarasoficial.com';
 
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+  keepAlive: true
+});
+
 const client = axios.create({
   baseURL: BASE_URL,
+  httpsAgent,
   headers: {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -44,7 +51,7 @@ export const MugiwarasProvider = {
         const slug = parts.join('/');
         if (!slug || results.some(item => item.slug === slug)) return;
 
-        const parent = $(el).closest('div, article, li') || $(el);
+        const parent = $(el);
         const rawText = cleanText($(el).text());
         
         let title = parent.find('h3, h4, .title').first().text().trim();
@@ -53,7 +60,7 @@ export const MugiwarasProvider = {
           title = lines.join(' ') || parts[1]?.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
         }
 
-        const cover = parent.find('img').attr('src') || parent.find('img').attr('data-src') || $(el).find('img').attr('src') || null;
+        const cover = parent.find('img').attr('src') || parent.find('img').attr('data-src') || null;
 
         results.push({
           title: cleanText(title),
@@ -84,7 +91,7 @@ export const MugiwarasProvider = {
         const slug = parts.join('/');
         if (!slug || mangas.some(item => item.slug === slug)) return;
 
-        const parent = $(el).closest('div, article, li') || $(el);
+        const parent = $(el);
         let title = parent.find('h3, h4, .title').first().text().trim() || cleanText($(el).text());
         if (!title || title.length > 80) {
           title = parts[1]?.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
